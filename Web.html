@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TechFest 2025 — University Event Portal</title>
+
+  
+  <style>
+    * { box-sizing: border-box; font-family: system-ui, Arial, sans-serif; }
+    html, body { margin: 0; padding: 0; color: #222; }
+
+   
+    .navbar { position: fixed; top: 0; left: 0; right: 0; background: #0a2540; color: #fff; z-index: 1000; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 1rem; gap: 1rem; }
+    .logo { font-weight: 700; }
+    .logo span { color: #ffcc00; }
+    .nav-links { display: flex; gap: 0.7rem; }
+    .nav-links a { color: #fff; text-decoration: none; padding: 0.4rem 0.6rem; border-radius: 6px; }
+    .nav-links a:hover { background: rgba(255, 255, 255, 0.06); }
+    .login-box form { display: flex; gap: 0.4rem; }
+    .login-box input { padding: 0.25rem 0.4rem; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #fff; }
+    .login-box button { padding: 0.3rem 0.5rem; border-radius: 6px; border: none; background: #ffcc00; cursor: pointer; }
+
+    main { padding-top: 72px; }
+
+    .banner { min-height: 320px; display: flex; align-items: center; justify-content: center;
+              background-image: url('assets/banner.jpg'); background-size: cover; background-position: center;
+              color: #fff; text-align: center; }
+    .banner-content { background: rgba(0,0,0,0.35); padding: 1.4rem; border-radius: 8px; }
+    .banner .cta { display: inline-block; margin-top: 0.6rem; padding: 0.6rem 0.9rem; background: #ffcc00;
+                   color: #000; border-radius: 6px; text-decoration: none; }
+
+    
+    .intro { display: grid; grid-template-columns: 1fr 320px; gap: 1rem; padding: 1rem; }
+    .intro article { padding: 0.4rem; }
+    .gallery { display: grid; grid-template-columns: repeat(1,1fr); gap: 0.5rem; }
+    .gallery figure { margin: 0; }
+    .gallery img { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; }
+
+   
+    .register { padding: 1rem; }
+    form fieldset { border: 1px solid #ddd; padding: 0.8rem; margin-bottom: 0.8rem; border-radius: 6px; }
+    form legend { font-weight: 700; }
+    label { display: block; margin-top: 0.6rem; }
+    input, select, textarea, button { width: 100%; padding: 0.45rem; margin-top: 0.2rem; border: 1px solid #ccc; border-radius: 6px; }
+    input[type="checkbox"], input[type="radio"] { width: auto; margin-right: 0.4rem; }
+    .utils { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .util-card { flex: 1 1 240px; padding: 0.6rem; border-radius: 6px; background: #f7f7f7; }
+    .util-card h3 { margin-top: 0; }
+
+    
+    footer { text-align: center; padding: 1rem; background: #f3f3f3; margin-top: 1rem; }
+
+    /* Responsive adjustments */
+    @media (max-width:900px) {
+      .intro { grid-template-columns: 1fr; }
+      .nav-links, .login-box { display: none; }
+    }
+    @media (max-width:600px) {
+      .gallery img { height: 110px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo">TechFest <span>2025</span></div>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#events">Events</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#register">Register</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="login-box">
+        <form id="loginForm" action="#" method="get" onsubmit="return false;">
+          <input type="text" name="username" id="loginUser" placeholder="Username" required />
+          <input type="password" name="password" id="loginPass" placeholder="Password" required />
+          <button id="loginBtn" type="button">Login</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Banner -->
+    <section id="home" class="banner">
+      <div class="banner-content">
+        <h1>Welcome to TechFest 2025</h1>
+        <p>Innovate. Build. Compete. Celebrate technology and creativity.</p>
+        <a class="cta" href="#register">Register Now</a>
+      </div>
+    </section>
+
+    <!-- Introduction + Gallery -->
+    <section class="intro">
+      <article>
+        <h2>About the Fest</h2>
+        <p>
+          TechFest is a two-day departmental festival with coding challenges,
+          robotics, workshops, and startup showcases. Students from all years are
+          encouraged to participate.
+        </p>
+      </article>
+      
+    </section>
+
+    <!-- Registration Form (SINGLE form only) -->
+    <section id="register" class="register">
+      <h2>Online Registration</h2>
+
+      <form id="regForm" action="/serverlogic" method="post" enctype="multipart/form-data">
+        <!-- Personal Info -->
+        <fieldset>
+          <legend>Personal Details</legend>
+
+          <label for="fname">Full Name</label>
+          <input type="text" id="fname" name="fullname" required />
+
+          <label for="regno">Registration No.</label>
+          <input type="text" id="regno" name="regno" required />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required />
+
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="10-digit" required />
+
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required />
+
+          <label for="website">Portfolio / URL</label>
+          <input type="url" id="website" name="website" placeholder="https://" />
+
+          <label for="search">Search Skill</label>
+          <input type="search" id="search" name="searchskill" placeholder="e.g. Python" />
+
+          <label for="password">Set Password</label>
+          <input type="password" id="password" name="password" required />
+        </fieldset>
+
+        <!-- Event Choice (radio) -->
+        <fieldset>
+          <legend>Event Choices</legend>
+          <label><input type="radio" name="event_choice" value="coding" required /> Coding Contest</label>
+          <label><input type="radio" name="event_choice" value="robotics" /> Robotics</label>
+          <label><input type="radio" name="event_choice" value="workshop" /> Workshop</label>
+        </fieldset>
+
+        <!-- Preferences (checkboxes) -->
+        <fieldset>
+          <legend>Preferences</legend>
+          <label><input type="checkbox" name="prefs" value="food" /> Veg Meals</label>
+          <label><input type="checkbox" name="prefs" value="swag" /> Swag Pack</label>
+          <label><input type="checkbox" name="prefs" value="mentoring" /> Mentoring Session</label>
+          <label><input type="checkbox" name="prefs" value="network" /> Networking</label>
+          <label><input type="checkbox" name="prefs" value="accommodation" /> Accommodation</label>
+        </fieldset>
+
+        <!-- File Upload -->
+        <fieldset>
+          <legend>Upload</legend>
+          <label for="photo">Upload Photo</label>
+          <input type="file" id="photo" name="photo" accept="image/*" required />
+        </fieldset>
+
+        <!-- Select (dropdown) -->
+        <fieldset>
+          <legend>Department / Stream</legend>
+          <label for="dept">Select Department</label>
+          <select id="dept" name="department" required>
+            <option value="">--Choose--</option>
+            <option value="cs">Computer Science</option>
+            <option value="it">Information Technology</option>
+            <option value="me">Mechanical</option>
+            <option value="ec">Electronics</option>
+            <option value="ce">Civil</option>
+          </select>
+        </fieldset>
+
+        <!-- Textarea -->
+        <fieldset>
+          <legend>About You</legend>
+          <label for="about">Short Bio / Special Skills</label>
+          <textarea id="about" name="about" rows="4" placeholder="Tell us about yourself..."></textarea>
+        </fieldset>
+
+        <!-- Progress -->
+        <fieldset>
+          <legend>Upload Progress</legend>
+          <label for="progress">Form Completion</label>
+          <progress id="progress" value="0" max="100">0%</progress>
+        </fieldset>
+
+        <!-- Utilities -->
+        <fieldset>
+          <legend>Utilities</legend>
+          <div class="utils">
+            <!-- BMI Calculator -->
+            <div class="util-card">
+              <h3>BMI Calculator</h3>
+              <label for="bmi-weight">Weight (kg)</label>
+              <input type="number" id="bmi-weight" name="bmi_weight" min="1" />
+              <label for="bmi-height">Height (cm)</label>
+              <input type="number" id="bmi-height" name="bmi_height" min="1" />
+              <button type="button" id="bmi-calc">Calculate BMI</button>
+              <p id="bmi-result">BMI: —</p>
+            </div>
+
+            <!-- Currency Converter -->
+            <div class="util-card">
+              <h3>Currency Converter</h3>
+              <label for="amount">Amount</label>
+              <input type="number" id="amount" name="amount" min="0" value="1" />
+
+              <label for="from-currency">From</label>
+              <select id="from-currency" name="from_currency">
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+              </select>
+
+              <label for="to-currency">To</label>
+              <select id="to-currency" name="to_currency">
+                <option value="USD">USD</option>
+                <option value="INR">INR</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+              </select>
+
+              <button type="button" id="convertBtn">Convert</button>
+              <p id="conv-result">Converted: —</p>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Submit / Reset -->
+        <fieldset>
+          <legend>Final</legend>
+          <label for="attendees">Number of Attendees</label>
+          <input type="number" id="attendees" name="attendees" min="1" value="1" />
+
+          <label for="profile-url">LinkedIn / Profile</label>
+          <input type="url" id="profile-url" name="profile" />
+
+          <input type="submit" value="Submit Registration" />
+          <input type="reset" value="Reset Form" />
+        </fieldset>
+      </form>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact</h2>
+      <p>Email: techfest@university.edu | Phone: +91-99999-99999</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 TechFest — University Department</p>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+  <!-- Internal JS (merged from script.js) -->
+  <script>
+    // Plain JavaScript - BMI + Login + Progress
+    document.addEventListener('DOMContentLoaded', function() {
+      // BMI Calculator
+      function bmiCategory(bmi) {
+        if (bmi < 18.5) return 'Underweight';
+        if (bmi < 25) return 'Normal';
+        if (bmi < 30) return 'Overweight';
+        return 'Obese';
+      }
+      function computeBMI() {
+        var w = parseFloat(document.getElementById('bmi-weight').value);
+        var h = parseFloat(document.getElementById('bmi-height').value);
+        if (!w || !h) { document.getElementById('bmi-result').textContent = 'BMI: —'; return; }
+        var bmi = w / Math.pow(h/100, 2);
+        document.getElementById('bmi-result').textContent = 'BMI: ' + bmi.toFixed(2) + ' (' + bmiCategory(bmi) + ')';
+      }
+      document.getElementById('bmi-calc').addEventListener('click', computeBMI);
+      document.getElementById('bmi-weight').addEventListener('input', computeBMI);
+      document.getElementById('bmi-height').addEventListener('input', computeBMI);
+
+      // Login Demo
+      document.getElementById('loginBtn').addEventListener('click', function() {
+        var u = document.getElementById('loginUser').value;
+        alert('Login demo: ' + (u || 'Guest'));
+      });
+
+      // Progress update
+      var progress = document.getElementById('progress');
+      var requiredFields = ['fname','email','phone','dob','password','photo'];
+      function updateProgress() {
+        var filled = 0;
+        requiredFields.forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el && el.value) filled++;
+        });
+        var pct = Math.round((filled/requiredFields.length) * 100);
+        progress.value = pct;
+        progress.innerText = pct + '%';
+      }
+      requiredFields.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', updateProgress);
+          el.addEventListener('change', updateProgress);
+        }
+      });
+    });
+
+    // jQuery - Currency Converter
+    $(function() {
+      var rates = {
+        "INR": {"USD":0.012, "EUR":0.011, "GBP":0.009, "INR":1},
+        "USD": {"INR":83.5, "EUR":0.92, "GBP":0.80, "USD":1},
+        "EUR": {"USD":1.09, "INR":91.0, "GBP":0.87, "EUR":1},
+        "GBP": {"USD":1.25, "INR":105.0, "EUR":1.15, "GBP":1}
+      };
+      
+      function doConvert() {
+        var amt = parseFloat($('#amount').val());
+        var from = $('#from-currency').val();
+        var to = $('#to-currency').val();
+        if (isNaN(amt)) { $('#conv-result').text('Converted: —'); return; }
+        var rate = (rates[from] && rates[from][to]) || 1;
+        var conv = amt * rate;
+        $('#conv-result').text('Converted: ' + conv.toFixed(2) + ' ' + to);
+      }
+      $('#convertBtn').on('click', doConvert);
+      $('#amount').on('keyup', doConvert);
+      $('#from-currency, #to-currency').on('change', doConvert);
+    });
+  </script>
+</body>
+</html>
